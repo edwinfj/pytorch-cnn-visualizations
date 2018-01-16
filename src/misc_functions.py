@@ -50,6 +50,21 @@ def save_gradient_images(gradient, file_name):
     cv2.imwrite(path_to_file, gradient)
 
 
+def show_gradient_image(gradient, title="Gradient"):
+    """
+    Show the original gradient image
+    :param gradient: Numpy array of the gradient with shape (3, 224, 224)
+    :param title: title of the window to show the gradient
+    :return: No return
+    """
+    gradient = gradient - gradient.min()
+    gradient /= gradient.max()
+    gradient = np.uint8(gradient * 255).transpose(1, 2, 0)
+    # Convert RBG to GBR
+    gradient = gradient[..., ::-1]
+    cv2.imshow(title, gradient)
+
+
 def save_class_activation_on_image(org_img, activation_map, file_name):
     """
         Saves cam activation map and activation map on the original image
